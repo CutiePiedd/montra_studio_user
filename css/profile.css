@@ -1,16 +1,23 @@
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #fff9f9;
-  color: #333;
-}
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px; /* Match your logo height exactly */
+  background: #fff9f9;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0 2rem; /* horizontal padding only */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid #ddd;
-  background: #fff9f9;
+  z-index: 2000; /* raise it above everything */
+}
+
+.header .logo img {
+  height: 100%;
+  width: auto;
+  display: block;
 }
 
 .header-right {
@@ -19,32 +26,43 @@ body {
   gap: 1.5rem;
 }
 
+/* nav links */
 .nav a {
-  margin: 0 0.5rem;
   text-decoration: none;
   color: #333;
   font-weight: 500;
+  margin: 0 0.5rem;
 }
+.nav a:hover { color: #1a2a4f; }
 
-.nav a:hover {
-  color: #1a2a4f;
-}
-
-.profile-icon img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-   transition: transform 0.2s ease;
-}
-.profile-icon img:hover {
-  transform: scale(1.2);
-}
+/* profile icon */
 .profile-icon {
-  display: inline-block;
-  margin-left: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.profile-icon a {
+  display: flex;
+  align-items: center;
+}
+.profile-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+.profile-icon img:hover { transform: scale(1.1); }
 
+/* offset page content so it isn't hidden behind the fixed header */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #fff9f9;
+  color: #333;
+  padding-top: 120px;
+  padding-bottom: 100px; /* slightly more than header height */
+}
 
 .navbar {
   display: flex;

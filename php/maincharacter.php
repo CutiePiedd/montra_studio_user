@@ -36,7 +36,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
     </div>
   </div>
 </header>
-
+<br/><br/><br/><br/><br/><br/>
   <!-- HERO SECTION -->
   <section class="hero-section">
     <h1>Our Services</h1>

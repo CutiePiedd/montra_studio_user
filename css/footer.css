@@ -1,9 +1,35 @@
 /* FOOTER */
-.footer {
-  background: #25384A; /* dark blue */
+/* Reset layout to normal flow */
+html, body {
+  height: auto;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* Space for your fixed navbar so content doesn’t hide behind it */
+body { /* adjust based on your header height */
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+/* Make sure main expands to fill space when short */
+main {
+  padding-bottom: 160px;
+}
+
+/* Footer should sit naturally at bottom */
+footer.footer {
+  position: relative;
+  bottom: 0;
+  left: 0; /* remove fixed behavior */
+  width: 100%;
+  background: #25384A;
   color: #fff;
-  padding: 3rem 5% 1rem;
   text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+  z-index: 1000;
 }
 
 .footer h2 {

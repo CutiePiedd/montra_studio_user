@@ -29,7 +29,7 @@ $stmt->close();
 
 // Fetch user bookings (use correct column names from your table)
 $bookings = [];
-$sql = "SELECT id, package_name, preferred_date, preferred_time, total_price, addons, status, created_at 
+$sql = "SELECT id, package_name, preferred_date, preferred_time, total_price, addons, status, receipt_image, created_at 
         FROM bookings 
         WHERE user_id = ?
         ORDER BY created_at DESC";
@@ -117,7 +117,8 @@ foreach ($bookings as $b) {
 </header>
 
   <!-- Profile Section -->
-  <div class="profile-container">
+ <main>
+   <div class="profile-container">
     <div class="profile-card">
       <div class="profile-top">
         <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="User Avatar" class="profile-img">
@@ -159,16 +160,42 @@ foreach ($bookings as $b) {
               </thead>
               <tbody>
                 <?php foreach ($grouped[$key] as $b): ?>
-                  <tr>
-                    <td><?= htmlspecialchars($b['package_name']) ?></td>
-                    <td><?= htmlspecialchars($b['preferred_date']) ?></td>
-                    <td><?= htmlspecialchars($b['preferred_time']) ?></td>
-                    <td><?= nl2br(htmlspecialchars($b['addons'] ?: '—')) ?></td>
-                    <td>₱<?= number_format($b['total_price'], 2) ?></td>
-                    <td><span class="badge <?= htmlspecialchars($b['status']) ?>"><?= ucfirst($b['status']) ?></span></td>
-                    <td><?= htmlspecialchars((new DateTime($b['created_at']))->format('M d, Y')) ?></td>
-                  </tr>
-                <?php endforeach; ?>
+  <tr>
+    <td><?= htmlspecialchars($b['package_name']) ?></td>
+    <td><?= htmlspecialchars($b['preferred_date']) ?></td>
+    <td><?= htmlspecialchars($b['preferred_time']) ?></td>
+    <td><?= nl2br(htmlspecialchars($b['addons'] ?: '—')) ?></td>
+    <td>₱<?= number_format($b['total_price'], 2) ?></td>
+    <td><span class="badge <?= htmlspecialchars($b['status']) ?>"><?= ucfirst($b['status']) ?></span></td>
+    <td><?= htmlspecialchars((new DateTime($b['created_at']))->format('M d, Y')) ?></td>
+  </tr>
+
+  <?php if ($b['status'] === 'pending'): ?>
+    <tr>
+      <td colspan="7" style="background:#f9f9f9; text-align:center;">
+        <strong>To confirm your booking, please pay ₱100 and upload your receipt below. Our Gcash acc is 09671087944</strong><br><br>
+
+        <?php if (!empty($b['receipt_image'])): ?>
+  <div style="text-align:center;">
+    <p>✅ Receipt uploaded. Click the image to view full size.</p>
+    <img src="../uploads/<?= htmlspecialchars($b['receipt_image']) ?>"
+         alt="Receipt"
+         style="max-width:200px;border-radius:8px;cursor:pointer;transition:transform 0.2s;"
+         onclick="openReceiptModal('../uploads/<?= htmlspecialchars($b['receipt_image']) ?>')">
+  </div>
+<?php else: ?>
+  <form action="upload_receipt.php" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="booking_id" value="<?= $b['id'] ?>">
+    <input type="file" name="receipt" accept="image/*" required>
+    <button type="submit" style="margin-left:10px;padding:6px 12px;">Upload Receipt</button>
+  </form>
+<?php endif; ?>
+
+      </td>
+    </tr>
+  <?php endif; ?>
+<?php endforeach; ?>
+
               </tbody>
             </table>
           <?php endif; ?>
@@ -183,6 +210,9 @@ foreach ($bookings as $b) {
     </div>
   </div>
 
+
+
+ </main>
   <footer class="footer">
     <h2>Get In Touch</h2>
     <p class="footer-tagline">Capturing moments. Creating stories. Celebrating you.</p>
@@ -221,6 +251,33 @@ foreach ($bookings as $b) {
     </div>
     <p class="footer-copy">© 2025 MontraStudio. All rights reserved.</p>
   </footer>
+<div id="receiptModal" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+    z-index:1000;
+">
+  <img id="receiptPreview" src="" alt="Full Receipt" style="max-width:90%; max-height:90%; border-radius:12px;">
+</div>
+
+<script>
+  const modal = document.getElementById('receiptModal');
+  const preview = document.getElementById('receiptPreview');
+
+  function openReceiptModal(src) {
+    preview.src = src;
+    modal.style.display = 'flex';
+  }
+
+  modal.addEventListener('click', () => {
+    modal.style.display = 'none';
+    preview.src = '';
+  });
+</script>
 
 </body>
 </html>
