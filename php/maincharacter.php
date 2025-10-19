@@ -1,6 +1,15 @@
 <?php
 session_start();
+require_once '../api/db_connect.php';
+session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
+
+$id = 1; // Main Character package
+$result = mysqli_query($conn, "SELECT * FROM packages WHERE id=$id");
+$package = mysqli_fetch_assoc($result);
+
+$includes = explode(',', $package['includes']);
+$images = explode(',', $package['images']);
 ?>
 
 
@@ -47,51 +56,39 @@ $isLoggedIn = isset($_SESSION['user_id']);
   <section class="service-package">
     <div class="package-card">
       <div class="package-img">
-        <img src="..\images\Maincharacter.png" alt="Main Character Package">
+       <img src="../uploads/<?= htmlspecialchars($package['main_image']) ?>" alt="Main Character Package">
+
       </div>
 
       <div class="package-content">
-        <h2>Main Character</h2>
-        <p>
-          The Main Character Package is all about you. Enjoy a personalized studio session
-          designed to highlight your personality and style, with professional lighting,
-          wardrobe guidance, and expert direction to capture your best angles.
-          Perfect for portraits, creative shoots, or simply celebrating yourself with stunning images.
-        </p>
+       <h2><?= htmlspecialchars($package['name']) ?></h2>
+<p><?= nl2br(htmlspecialchars($package['description'])) ?></p>
+
         <br/> <br/><br/><br/><br/><br/> <br/>
 
-        <div class="price-box">
-  <h3>₱1000.00</h3>
+       <div class="price-box">
+  <h3>₱<?= number_format($package['price'], 2) ?></h3>
   <?php if ($isLoggedIn): ?>
-    <a class="service-card" href="../php/booking.php?package=maincharacter&price=2000"><button class="btn-book">Book Now</button></a>
+    <a class="service-card" href="../php/booking.php?package=maincharacter&price=<?= $package['price'] ?>">
+      <button class="btn-book">Book Now</button>
+    </a>
   <?php else: ?>
     <a href="login.php"><button class="btn-book">Log in to Book</button></a>
   <?php endif; ?>
 </div>
 
 
+
       </div>
     </div>
 
     <!-- IMAGE CAROUSEL -->
-    <div class="carousel-container">
-        <button class="carousel-btn prev">&#10094;</button>
-         <div class="carousel">
-      <img src="..\images\image 53.png" alt="Look 1">
-      <img src="..\images\image 54.png" alt="Look 2">
-      <img src="..\images\image 58.png" alt="Look 3">
-      <img src="..\images\image 59.png" alt="Look 4">
-      <img src="..\images\image 60.png" alt="Look 5">
-      <img src="..\images\solo1.jpg" alt="Look 6">
-      <img src="..\images\solo2.jpg" alt="Look 7">
-      <img src="..\images\solo3.jpg" alt="Look 8">
-      <img src="..\images\solo4.jpg" alt="Look 9">
-      <img src="..\images\solo5.jpg" alt="Look 10">
-      <img src="..\images\solo6.jpg" alt="Look 11">
-      <img src="..\images\solo7.jpg" alt="Look 12">
-         </div>
-      <button class="carousel-btn next">&#10095;</button>
-    </div>
+<div class="carousel">
+  <?php foreach ($images as $img): ?>
+    <img src="../uploads/<?= htmlspecialchars(trim($img)) ?>" alt="Package Image">
+  <?php endforeach; ?>
+</div>
+
 
     <!-- PACKAGE DETAILS -->
     
@@ -100,13 +97,11 @@ $isLoggedIn = isset($_SESSION['user_id']);
   <div class="package-details">
       <h3>Main Character Package Includes:</h3>
       <ul>
-        <li>1-hour studio session</li>
-        <li>Choice of up to 2 backdrop colors (white, black, gray, or beige)</li>
-        <li>Unlimited shots during the session</li>
-        <li>8 professionally edited digital photos</li>
-        <li>Access to all raw files (optional add-on)</li>
-        <li>Online gallery for viewing and downloading</li>
-      </ul>
+  <?php foreach ($includes as $item): ?>
+    <li><?= htmlspecialchars(trim($item)) ?></li>
+  <?php endforeach; ?>
+</ul>
+
     </div>
 
   <!-- FOOTER -->
