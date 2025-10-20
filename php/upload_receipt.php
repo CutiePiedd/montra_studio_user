@@ -12,34 +12,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['receipt']) && isset(
     $booking_id = intval($_POST['booking_id']);
     $user_id = $_SESSION['user_id'];
     
-    // Create upload directory if it doesn’t exist
-    $uploadDir = '../uploads/';
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+    // Define both upload directories
+    $adminUploadDir = 'D:/xampp/htdocs/admin_montra/uploads/';
+    $userUploadDir = 'D:/xampp/htdocs/montra_website/uploads/';
+
+    // Create directories if they don't exist
+    if (!is_dir($adminUploadDir)) {
+        mkdir($adminUploadDir, 0777, true);
+    }
+    if (!is_dir($userUploadDir)) {
+        mkdir($userUploadDir, 0777, true);
     }
 
-    // File upload setup
+    // File setup
     $fileName = basename($_FILES['receipt']['name']);
     $fileTmp = $_FILES['receipt']['tmp_name'];
-    $targetPath = $uploadDir . time() . '_' . $fileName;
-    $fileType = strtolower(pathinfo($targetPath, PATHINFO_EXTENSION));
+    $uniqueName = time() . '_' . $fileName;
+    $targetPathAdmin = $adminUploadDir . $uniqueName;
+    $targetPathUser = $userUploadDir . $uniqueName;
+    $fileType = strtolower(pathinfo($targetPathAdmin, PATHINFO_EXTENSION));
 
-    // Only allow certain file types
+    // Allow only images
     $allowedTypes = ['jpg', 'jpeg', 'png'];
     if (!in_array($fileType, $allowedTypes)) {
         die("Only JPG, JPEG, and PNG files are allowed.");
     }
 
-    // Move file to upload directory
-    if (move_uploaded_file($fileTmp, $targetPath)) {
-        // Save file path in database
-        $fileNameForDB = basename($targetPath);
+    // Move file to admin uploads folder
+    if (move_uploaded_file($fileTmp, $targetPathAdmin)) {
+        // Copy file to user uploads folder
+        copy($targetPathAdmin, $targetPathUser);
 
+        // Save filename (not full path) to DB
         $stmt = $conn->prepare("UPDATE bookings SET receipt_image = ? WHERE id = ? AND user_id = ?");
         if (!$stmt) {
             die("Database error: " . $conn->error);
         }
-        $stmt->bind_param("sii", $fileNameForDB, $booking_id, $user_id);
+        $stmt->bind_param("sii", $uniqueName, $booking_id, $user_id);
         $stmt->execute();
 
         $stmt->close();
@@ -53,3 +62,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['receipt']) && isset(
 } else {
     die("Invalid request.");
 }
+?>

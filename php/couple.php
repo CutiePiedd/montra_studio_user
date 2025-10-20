@@ -31,10 +31,10 @@ $images = explode(',', $package['images']);
   </div>
 
   <div class="header-right">
-    <nav class="nav">
+     <nav class="nav">
         <a href="../html/homepage.html">Home</a>
       <a href="../html/services.html">Services</a>
-      <a href="aboutus.html">About us</a>
+      <a href="../html/aboutus.html">About us</a>
     </nav>
 
     <div class="profile-icon">

@@ -31,10 +31,10 @@ $images = explode(',', $package['images']);
   </div>
 
   <div class="header-right">
-    <nav class="nav">
+     <nav class="nav">
         <a href="../html/homepage.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="aboutus.html">About us</a>
+      <a href="../html/services.html">Services</a>
+      <a href="../html/aboutus.html">About us</a>
     </nav>
 
     <div class="profile-icon">
@@ -66,7 +66,7 @@ $images = explode(',', $package['images']);
 <div class="price-box">
   <h3>₱<?= number_format($package['price'], 2) ?></h3>
   <?php if ($isLoggedIn): ?>
-    <a class="service-card" href="../php/booking.php?package=couple&price=<?= $package['price'] ?>">
+    <a class="service-card" href="../php/booking.php?package=family&price=<?= $package['price'] ?>">
       <button class="btn-book">Book Now</button>
     </a>
   <?php else: ?>
