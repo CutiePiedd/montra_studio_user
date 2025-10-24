@@ -23,7 +23,7 @@ footer.footer {
   position: relative;
   bottom: 0;
   left: 0; /* remove fixed behavior */
-  width: 100%;
+  width: 98%;
   background: #25384A;
   color: #fff;
   text-align: center;

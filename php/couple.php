@@ -1,17 +1,19 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once '../api/db_connect.php';
-session_start();
+
 $isLoggedIn = isset($_SESSION['user_id']);
 
-$id = 1; // couple package
+$id = 1; // Main Character package
 $result = mysqli_query($conn, "SELECT * FROM packages_couple WHERE id=$id");
 $package = mysqli_fetch_assoc($result);
 
 $includes = explode(',', $package['includes']);
 $images = explode(',', $package['images']);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,31 +22,113 @@ $images = explode(',', $package['images']);
   <title>Our Services | Mantra Studio</title>
   <link rel="stylesheet" href="..\css\maincharacter.css" />
     <link rel="stylesheet" href="..\css\footer.css">
+     <style>
+    .header {
+  position: relative;
+  z-index: 10;
+}
+.notification-icon {
+  position: relative;
+  z-index: 10000; /* make sure dropdown stays on top */
+}
+
+    /* Notification Bell Styling */
+    .notification-icon {
+  position: relative;
+  margin-right: 15px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.notification-icon img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+.notif-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 3px 6px;
+  display: none;
+}
+
+.notif-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 9999; /* Make sure it’s above everything */
+  display: none;
+}
+
+.notif-dropdown.active {
+  display: block !important;
+}
+
+.notif-dropdown p {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  background: white;
+}
+
+.notif-dropdown p:hover {
+  background: #f5f5f5;
+}
+
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
- <header class="header">
-   <div class="logo"> 
-    <img src="..\images\LOGO.png" alt="Montra Studio Logo"style="height: 100px; width: 300px;"> 
-  </div>
+  <header class="header">
+    <div class="logo">
+      <img src="../images/LOGO.png" alt="Montra Studio Logo" style="height: 100px; width: 300px;">
+    </div>
 
-  <div class="header-right">
-     <nav class="nav">
-        <a href="../html/homepage.html">Home</a>
+    <div class="header-right">
+      <nav class="nav">
+       <a href="../php/homepage.php">Home</a>
       <a href="../html/services.html">Services</a>
       <a href="../html/aboutus.html">About us</a>
-    </nav>
+      </nav>
 
-    <div class="profile-icon">
-      <a href="profile.php">
-        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile">
-      </a>
-    </div>
+     <?php if (isset($_SESSION['user_id'])): ?>
+<!-- Notification Bell (Only for logged-in users) -->
+<div class="notification-icon">
+  <img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png" 
+       alt="Notifications" id="notifBell">
+  <span id="notifCount" class="notif-count"></span>
+
+  <!-- Added: Default message inside dropdown so it's visible -->
+  <div id="notifDropdown" class="notif-dropdown">
+    <p style="text-align:center; color:#888;">Loading notifications...</p>
   </div>
-</header>
+</div>
+<?php endif; ?>
 
+
+      <div class="profile-icon">
+        <a href="../php/profile.php">
+          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile">
+        </a>
+      </div>
+    </div>
+  </header>
+
+<br/><br/><br/><br/><br/><br/>
   <!-- HERO SECTION -->
   <section class="hero-section">
     <h1>Our Services</h1>
@@ -172,6 +256,52 @@ $images = explode(',', $package['images']);
     carousel.scrollTo({ left: scrollPos, behavior: 'smooth' });
   });
 </script>
+  <?php if (isset($_SESSION['user_id'])): ?>
+  <!-- Notifications Script -->
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const bell = document.getElementById('notifBell');
+  const dropdown = document.getElementById('notifDropdown');
+  const notifCount = document.getElementById('notifCount');
 
+  if (!bell || !dropdown) return;
+
+  function fetchNotifications() {
+    fetch('../php/fetch_notifications.php')
+      .then(res => res.json())
+      .then(data => {
+        dropdown.innerHTML = ''; // clear old
+
+        if (data.length > 0) {
+          notifCount.textContent = data.length;
+          notifCount.style.display = 'inline-block';
+
+          data.forEach(item => {
+            const p = document.createElement('p');
+            p.textContent = item.message;
+            dropdown.appendChild(p);
+          });
+        } else {
+          notifCount.style.display = 'none';
+          dropdown.innerHTML = '<p style="color:#777;text-align:center;">No new notifications</p>';
+        }
+      })
+      .catch(err => {
+        console.error('Notification fetch error:', err);
+        dropdown.innerHTML = '<p style="color:red;text-align:center;">Error loading notifications</p>';
+      });
+  }
+
+  fetchNotifications();
+  setInterval(fetchNotifications, 5000);
+
+  bell.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+  });
+});
+
+</script>
+
+  <?php endif; ?>
 </body>
 </html>

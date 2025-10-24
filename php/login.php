@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
-            header("Location: ../html/services.html");
+            header("Location: ../php/services.php");
             exit;
         } else {
             echo "<script>alert('Invalid password!');</script>";
@@ -34,7 +34,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Montra Studio</title>
   <link rel="stylesheet" href="../css/login.css">
-   <link rel="stylesheet" href="..\css\footer.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+   <link rel="stylesheet" href="../css/footer.css">
+<style> /* Dropdown profile styles */
+ body { font-family: 'Inter', sans-serif;  margin:0;   background-color: #fff9f9;}
+    .profile-icon { position: relative; display: inline-block; }
+    .profile-icon img { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; transition: all 0.3s ease; }
+    .profile-icon img:hover { border-color: #aaa; transform: scale(1.05); }
+    .dropdown-menu { display: none; position: absolute; top: 55px; right: 0; background-color: #fff; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); width: 230px; overflow: hidden; z-index: 100; animation: dropdownFade 0.25s ease-in-out; }
+    .dropdown-user { background: #f8f8f8; padding: 15px; text-align: left; }
+    .dropdown-user p { margin: 3px 0; color: #333; font-size: 14px; }
+    .dropdown-user strong { font-weight: 600; color: #222; }
+    .member-since { font-size: 12px; color: #777; margin-top: 5px; }
+    .dropdown-item { display: block; padding: 12px 16px; text-decoration: none; color: #333; font-size: 14px; transition: background-color 0.2s ease; }
+    .dropdown-item:hover { background-color: #f2f2f2; }
+    .logout { color: #c0392b; font-weight: 500; }
+    .dropdown-menu hr { margin: 8px 0; border: none; border-top: 1px solid #e0e0e0; }
+    @keyframes dropdownFade { from { opacity: 0; transform: translateY(-8px);} to { opacity: 1; transform: translateY(0);} }
+         .header {
+  position: relative;
+  z-index: 10;
+}</style>
 </head>
 <body>
   <!-- HEADER -->
@@ -45,16 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="header-right">
       <nav class="nav">
-        <a href="../html/homepage.html">Home</a>
-        <a href="../html/services.html">Services</a>
+        <a href="../php/homepage.php">Home</a>
+        <a href="../php/services.php">Services</a>
         <a href="../html/aboutus.html">About us</a>
       </nav>
 
-      <div class="profile-icon">
-        <a href="../html/profile.html">
-          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile">
-        </a>
-      </div>
+     
     </div>
   </header>
 
@@ -75,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <button type="submit" class="btn-login">Sign In</button>
-        <a href="#" class="forgot-password">Forgot Password?</a>
+        <a href="forgot_password.php" class="forgot-password">Forgot Password?</a>
       </form>
     </div>
   </div>

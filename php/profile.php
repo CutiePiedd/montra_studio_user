@@ -91,27 +91,52 @@ foreach ($bookings as $b) {
     .info-section { margin-top:20px; }
     .button-container { margin-top:20px; }
     .logout-btn { display:inline-block; padding:10px 18px; background:#2f3e55; color:#fff; border-radius:8px; text-decoration:none; }
+    /* NEW: Profile dropdown styles */
+    .profile-icon { position: relative; display: inline-block; }
+    .profile-icon img { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+    .profile-icon img:hover { border-color: #2f3e55; }
+    .dropdown-menu { display: none; position: absolute; right: 0; top: 60px; background: #fff; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); width: 230px; padding: 10px 0; z-index: 1000; }
+    .dropdown-menu.show { display: block; }
+    .dropdown-user { padding: 10px 16px; text-align: left; }
+    .dropdown-user p { margin: 4px 0; font-size: 0.9em; }
+    .member-since { font-size: 0.8em; color: #777; }
+    .dropdown-item { display: block; padding: 10px 16px; color: #333; text-decoration: none; font-size: 0.9em; }
+    .dropdown-item:hover { background: #f2f2f2; }
+    .dropdown-item.logout { color: #dc3545; font-weight: 600; }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
- <header class="header">
-   <div class="logo">
+<header class="header">
+  <div class="logo">
     <a href="../html/homepage.html"><img src="../images/LOGO.png" alt="Montra Studio Logo" style="height: 100px; width: 300px;"></a>
   </div>
 
   <div class="header-right">
     <nav class="nav">
-      <a href="../html/homepage.html">Home</a>
+      <a href="../php/homepage.php">Home</a>
       <a href="../html/services.html">Services</a>
       <a href="../html/aboutus.html">About us</a>
     </nav>
 
-    <div class="profile-icon">
-      <a href="profile.php">
-        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile">
-      </a>
+    <!-- NEW: profile dropdown -->
+    <div class="profile-icon dropdown">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" class="dropdown-toggle" id="profileToggle">
+      <div class="dropdown-menu" id="profileMenu">
+         <div class="dropdown-user">
+          <p><strong><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></strong></p>
+          <p><?= htmlspecialchars($user['email']) ?></p>
+          <p class="member-since">Member since <?= (new DateTime($user['created_at']))->format('F Y') ?></p>
+        </div>
+        <hr>
+        <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
+        <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
+        <a href="#completed" class="dropdown-item">Completed Bookings</a>
+        <a href="#rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
+        <hr>
+        <a href="logout.php" class="dropdown-item logout">Logout</a>
+      </div>
     </div>
   </div>
 </header>
@@ -276,6 +301,15 @@ foreach ($bookings as $b) {
   modal.addEventListener('click', () => {
     modal.style.display = 'none';
     preview.src = '';
+  });
+   // NEW: Profile dropdown toggle
+  const profileToggle = document.getElementById('profileToggle');
+  const profileMenu = document.getElementById('profileMenu');
+  profileToggle.addEventListener('click', () => profileMenu.classList.toggle('show'));
+  window.addEventListener('click', (e) => {
+    if (!profileMenu.contains(e.target) && !profileToggle.contains(e.target)) {
+      profileMenu.classList.remove('show');
+    }
   });
 </script>
 

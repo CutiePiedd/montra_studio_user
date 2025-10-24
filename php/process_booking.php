@@ -2,48 +2,60 @@
 session_start();
 require_once '../api/db_connect.php';
 
-// redirect if user not logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
+    die("User not logged in.");
 }
 
-$user_id = $_SESSION['user_id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION['user_id'];
+    $package = $_POST['package'];
+    $base_price = floatval($_POST['base_price']);
+    $preferred_date = $_POST['preferred_date'];
+    $preferred_time = $_POST['preferred_time'];
+    $contact_person = $_POST['contact_person'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $special_request = $_POST['special_request'] ?? '';
+    
+    // Handle add-ons (array)
+    $addons = $_POST['addons'] ?? []; // This will be an array
+    $addons_str = implode(', ', $addons); // Convert to string for DB storage
 
-// get form data
-$package = $_POST['package'];
-$base_price = floatval($_POST['base_price']);
-$preferred_date = $_POST['preferred_date'];
-$preferred_time = $_POST['preferred_time'];
-$contact_person = $_POST['contact_person'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
-$special_request = $_POST['special_request'];
+    // Calculate total price
+    $total_price = $base_price;
+    if (in_array('instant_photo', $addons)) $total_price += 500;
+    if (in_array('custom_frame', $addons)) $total_price += 300;
+    if (in_array('extended_time', $addons)) $total_price += 100;
 
-// handle add-ons
-$addons = $_POST['addons'] ?? [];
-$total_price = $base_price;
+    $stmt = $conn->prepare("INSERT INTO bookings 
+        (user_id, package_name, preferred_date, preferred_time, contact_person, email, phone, special_request, addons, total_price)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-foreach ($addons as $addon) {
-    if ($addon == 'instant_photo') $total_price += 500;
-    if ($addon == 'custom_frame') $total_price += 300;
-    if ($addon == 'extended_time') $total_price += 100;
-}
-$addons_str = implode(", ", $addons);
+    $stmt->bind_param(
+        "issssssssd",
+        $user_id,
+        $package,
+        $preferred_date,
+        $preferred_time,
+        $contact_person,
+        $email,
+        $phone,
+        $special_request,
+        $addons_str,
+        $total_price
+    );
 
-// insert into bookings table with pending status
-$status = "pending";
-
-$stmt = $conn->prepare("INSERT INTO bookings (user_id, package_name, preferred_date, preferred_time, contact_person, email, phone, special_request, addons, total_price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("isssssssdss", $user_id, $package, $preferred_date, $preferred_time, $contact_person, $email, $phone, $special_request, $addons_str, $total_price, $status);
-
-if ($stmt->execute()) {
-    // redirect to profile page after successful booking
-    header("Location: profile.php?success=1");
+    if ($stmt->execute()) {
+    header("Location: profile.php");
     exit();
 } else {
-    echo "Error saving booking: " . $conn->error;
+    echo "Database Error: " . $stmt->error;
 }
-$stmt->close();
-$conn->close();
+
+
+    $stmt->close();
+    $conn->close();
+} else {
+    echo "Invalid request method.";
+}
 ?>

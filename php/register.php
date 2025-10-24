@@ -50,16 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="header-right">
       <nav class="nav">
-        <a href="../html/homepage.html">Home</a>
+        <a href="../php/homepage.php">Home</a>
         <a href="../html/services.html">Services</a>
         <a href="../html/aboutus.html">About us</a>
       </nav>
 
-      <div class="profile-icon">
-        <a href="../php/profile.php">
-          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile">
-        </a>
-      </div>
+    
     </div>
   </header>
 
