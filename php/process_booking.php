@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($stmt->execute()) {
-    header("Location: profile.php");
+    header("Location: pending_bookings.php");
     exit();
 } else {
     echo "Database Error: " . $stmt->error;

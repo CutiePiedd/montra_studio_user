@@ -1,0 +1,79 @@
+    .header {
+  position: fixed;
+  z-index: 10;
+}
+.notification-icon {
+  position: relative;
+  z-index: 10000; /* make sure dropdown stays on top */
+}
+
+    /* Notification Bell Styling */
+    .notification-icon {
+  position: relative;
+  margin-right: 15px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.notification-icon img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+.notif-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 3px 6px;
+  display: none;
+}
+
+.notif-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 9999; /* Make sure it’s above everything */
+  display: none;
+}
+
+.notif-dropdown.active {
+  display: block !important;
+}
+
+.notif-dropdown p {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  background: white;
+}
+
+.notif-dropdown p:hover {
+  background: #f5f5f5;
+}
+.breadcrumb a {
+  color: white;           /* Sets the font color to white */
+  text-decoration: none;  /* Removes the underline */
+}
+
+/* This styles the non-link "Packages" text */
+.breadcrumb span {
+  color: white;
+}
+
+/* This styles the "/" separators */
+.breadcrumb {
+  color: white;
+}
+  

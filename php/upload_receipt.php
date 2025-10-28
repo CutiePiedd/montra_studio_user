@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['receipt']) && isset(
         $stmt->close();
         $conn->close();
 
-        header("Location: profile.php?upload=success");
+        header("Location: pending_bookings.php?upload=success");
         exit();
     } else {
         die("Error uploading file.");

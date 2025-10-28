@@ -125,7 +125,11 @@ $conn->close();
   border: none;
   border-top: 1px solid #e0e0e0;
 }
-
+main { /* Keep this */
+   max-width: 1200px;
+   margin: 20px auto 40px auto; 
+   padding: 0 15px;
+}
 /* Subtle open animation */
 @keyframes dropdownFade {
   from {
@@ -137,7 +141,12 @@ $conn->close();
     transform: translateY(0);
   }
 }
-    body { font-family: 'Inter', sans-serif;  margin:0;   background-color: #fff9f9;}
+   body { 
+  font-family: 'Inter', sans-serif;  
+  margin: 0; 
+  background-color: #fff9f9; /* Match header */
+  padding-top: -10px; /* Adjust this value! */
+}
 
     .booking-section { margin-top: 40px; }
     table.bookings { width: 100%; border-collapse: collapse; margin-top: 20px; background:#fff; border-radius:10px; overflow:hidden; }
@@ -146,9 +155,12 @@ $conn->close();
     table.bookings tr:last-child td { border-bottom: none; }
     .badge { padding:6px 10px; border-radius:8px; color:#fff; font-weight:600; font-size:0.9em; }
     .badge.rejected { background:#e74c3c; }
-    .profile-container { display:flex; justify-content:center; padding:40px 20px; }
+    .profile-container { display:flex; justify-content:center; }
     .profile-card { max-width:1100px; width:100%; background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.08); padding:30px; }
-    h2 { margin-bottom:10px; }
+    h2 { font-weight: 700;
+  
+    margin-bottom: 2rem;
+    margin-top: 0; }
     .text-muted { color:#777; font-size:14px; }
 
     /* Dropdown profile styles */
@@ -166,7 +178,7 @@ $conn->close();
     .dropdown-menu hr { margin: 8px 0; border: none; border-top: 1px solid #e0e0e0; }
     @keyframes dropdownFade { from { opacity: 0; transform: translateY(-8px);} to { opacity: 1; transform: translateY(0);} }
          .header {
-  position: relative;
+  position: fixed;
   z-index: 10;
 }
 .notification-icon {
@@ -229,6 +241,64 @@ $conn->close();
 .notif-dropdown p:hover {
   background: #f5f5f5;
 }
+/* --- New Minimalist Table Style --- */
+.profile-card table.bookings { 
+    width: 100%; 
+    border-collapse: separate; /* Use separate for spacing */
+    border-spacing: 0 10px; /* Vertical spacing between rows */
+    margin-top: 1.5rem; 
+    background: transparent; /* Remove old background */
+    border-radius: 0; /* Remove old radius */
+    overflow: visible; /* Remove old overflow */
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+.profile-card table.bookings th, 
+.profile-card table.bookings td { 
+    padding: 15px 20px; 
+    border: none; /* Remove all borders initially */
+    text-align: left; 
+    vertical-align: middle;
+    background-color: #ffffff; /* White background for cells */
+    border-bottom: 1px solid #edf2f7; /* Light bottom border for separation */
+}
+.profile-card table.bookings th { 
+    background: #f7fafc; /* Light grey header */
+    color: #4a5568; /* Grey text header */
+    font-weight: 600; 
+    text-transform: uppercase; /* Uppercase headers */
+    font-size: 0.75rem; /* Smaller header text */
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0; /* Slightly thicker header bottom border */
+}
+/* Apply rounded corners to first/last cells of each row */
+.profile-card table.bookings tr td:first-child,
+.profile-card table.bookings tr th:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.profile-card table.bookings tr td:last-child,
+.profile-card table.bookings tr th:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+ /* Remove bottom border on the very last row's cells */
+.profile-card table.bookings tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* --- New Minimalist Badge Style --- */
+.badge.rejected { 
+    background: #fed7d7; /* Light red background */
+    color: #c53030;    /* Dark red text */
+    padding: 5px 12px; 
+    border-radius: 15px; 
+    font-weight: 500; 
+    font-size: 0.8em; 
+    border: 1px solid #fbb6b6; /* Light red border */
+}
+
+/* Keep other existing styles (.profile-icon, .dropdown-menu, etc.) */
+/* ... */
   </style>
 </head>
 <body>

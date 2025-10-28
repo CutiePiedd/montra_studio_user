@@ -6,7 +6,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $raw_password = $_POST['password']; // Get the raw password
+
+    // --- START: New Password Validation ---
+    $errors = [];
+    if (strlen($raw_password) < 8) {
+        $errors[] = "Password must be at least 8 characters long.";
+    }
+    if (!preg_match('/[A-Z]/', $raw_password)) {
+        $errors[] = "Password must include at least one uppercase letter.";
+    }
+    if (!preg_match('/[a-z]/', $raw_password)) {
+        $errors[] = "Password must include at least one lowercase letter.";
+    }
+    if (!preg_match('/[0-9]/', $raw_password)) {
+        $errors[] = "Password must include at least one number.";
+    }
+    if (!preg_match('/[^A-Za-z0-9]/', $raw_password)) {
+        // This regex checks for any character that is NOT a letter or number
+        $errors[] = "Password must include at least one symbol (e.g., !@#$).";
+    }
+
+    if (!empty($errors)) {
+        // If there are any errors, combine them into one message
+        $error_message = "Registration Failed:\\n" . implode("\\n", $errors);
+        
+        // Send the user back with the error message
+        echo "<script>alert('$error_message'); window.history.back();</script>";
+        exit;
+    }
+    // --- END: New Password Validation ---
+
+    // If validation passes, *then* hash the password
+    $password = password_hash($raw_password, PASSWORD_DEFAULT);
 
     // Check if email already exists
     $check = $conn->prepare("SELECT * FROM users WHERE email = ?");
@@ -25,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         $_SESSION['user_id'] = $conn->insert_id;
         $_SESSION['user_name'] = $first_name . ' ' . $last_name;
-        header("Location: ../html/services.html");
+        header("Location: ../php/services.php");
         exit;
     } else {
         echo "<script>alert('Registration failed!');</script>";
@@ -51,8 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="header-right">
       <nav class="nav">
         <a href="../php/homepage.php">Home</a>
-        <a href="../html/services.html">Services</a>
-        <a href="../html/aboutus.html">About us</a>
+        <a href="../php/services.php">Services</a>
+        <a href="../php/aboutus.php">About us</a>
       </nav>
 
     
@@ -80,7 +112,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="form-group password-field">
-          <input type="password" name="password" id="password" placeholder="Password" required>
+          <input type="password" name="password" id="password" placeholder="Password" required
+       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$"
+       title="Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one symbol (e.g., !@#$).">
           <span class="toggle-password" onclick="togglePassword()">&#128065;</span>
         </div>
 

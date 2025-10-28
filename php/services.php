@@ -26,102 +26,6 @@ if ($user_id) {
   <link rel="stylesheet" href="../css/services.css">
    <link rel="stylesheet" href="../css/footer.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-
-      body { font-family: 'Inter', sans-serif; background:#f7f7f7; margin:0; }
-
-    .booking-section { margin-top: 40px; }
-    table.bookings { width: 100%; border-collapse: collapse; margin-top: 20px; background:#fff; border-radius:10px; overflow:hidden; }
-    table.bookings th, table.bookings td { padding: 12px 16px; border-bottom: 1px solid #eee; text-align: left; }
-    table.bookings th { background:#111; color:#fff; font-weight:600; }
-    table.bookings tr:last-child td { border-bottom: none; }
-    .badge { padding:6px 10px; border-radius:8px; color:#fff; font-weight:600; font-size:0.9em; }
-    .badge.approved { background:#28a745; }
-    .profile-container { display:flex; justify-content:center; padding:40px 20px; }
-    .profile-card { max-width:1100px; width:100%; background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.08); padding:30px; }
-    h2 { margin-bottom:10px; }
-    .text-muted { color:#777; font-size:14px; }
-
-    /* Dropdown profile styles (reuse from your current UI) */
-    .profile-icon { position: relative; display: inline-block; }
-    .profile-icon img { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; transition: all 0.3s ease; }
-    .profile-icon img:hover { border-color: #aaa; transform: scale(1.05); }
-    .dropdown-menu { display: none; position: absolute; top: 55px; right: 0; background-color: #fff; border-radius: 10px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); width: 230px; overflow: hidden; z-index: 100; animation: dropdownFade 0.25s ease-in-out; }
-    .dropdown-user { background: #f8f8f8; padding: 15px; text-align: left; }
-    .dropdown-user p { margin: 3px 0; color: #333; font-size: 14px; }
-    .dropdown-user strong { font-weight: 600; color: #222; }
-    .member-since { font-size: 12px; color: #777; margin-top: 5px; }
-    .dropdown-item { display: block; padding: 12px 16px; text-decoration: none; color: #333; font-size: 14px; transition: background-color 0.2s ease; }
-    .dropdown-item:hover { background-color: #f2f2f2; }
-    .logout { color: #c0392b; font-weight: 500; }
-    .dropdown-menu hr { margin: 8px 0; border: none; border-top: 1px solid #e0e0e0; }
-    @keyframes dropdownFade { from { opacity: 0; transform: translateY(-8px);} to { opacity: 1; transform: translateY(0);} }
-
-      .header {
-  position: relative;
-  z-index: 10;
-}
-.notification-icon {
-  position: relative;
-  z-index: 10000; /* make sure dropdown stays on top */
-}
-
-    /* Notification Bell Styling */
-    .notification-icon {
-  position: relative;
-  margin-right: 15px;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.notification-icon img {
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
-}
-
-.notif-count {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: red;
-  color: white;
-  font-size: 11px;
-  font-weight: bold;
-  border-radius: 50%;
-  padding: 3px 6px;
-  display: none;
-}
-
-.notif-dropdown {
-  position: absolute;
-  right: 0;
-  top: 40px;
-  width: 250px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  z-index: 9999; /* Make sure it’s above everything */
-  display: none;
-}
-
-.notif-dropdown.active {
-  display: block !important;
-}
-
-.notif-dropdown p {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
-  color: #333;
-  margin: 0;
-  background: white;
-}
-
-.notif-dropdown p:hover {
-  background: #f5f5f5;
-}
-  </style>
 </head>
 <body>
 
@@ -160,10 +64,11 @@ if ($user_id) {
       <p class="member-since">Member since <?= (new DateTime($user['created_at']))->format('F Y') ?></p>
     </div>
     <hr>
-    <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
-    <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
-    <a href="completed_bookings.php" class="dropdown-item">Completed Bookings</a>
-    <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
+   <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
+        <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
+        <a href="user_chat.php" class="dropdown-item">Contact Admin</a>
+        <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
+         <a href="user_chat.php" class="dropdown-item">Messages</a> 
     <hr>
     <a href="logout.php" class="dropdown-item logout">Logout</a>
   </div>

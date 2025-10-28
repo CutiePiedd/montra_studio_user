@@ -34,10 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Montra Studio</title>
   <link rel="stylesheet" href="../css/login.css">
-  <link rel="stylesheet" href="../css/dashboard.css">
    <link rel="stylesheet" href="../css/footer.css">
-<style> /* Dropdown profile styles */
- body { font-family: 'Inter', sans-serif;  margin:0;   background-color: #fff9f9;}
+<style> 
+    
+    /* --- END OF ADDED RULE --- */
+    
     .profile-icon { position: relative; display: inline-block; }
     .profile-icon img { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; transition: all 0.3s ease; }
     .profile-icon img:hover { border-color: #aaa; transform: scale(1.05); }
@@ -51,10 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .logout { color: #c0392b; font-weight: 500; }
     .dropdown-menu hr { margin: 8px 0; border: none; border-top: 1px solid #e0e0e0; }
     @keyframes dropdownFade { from { opacity: 0; transform: translateY(-8px);} to { opacity: 1; transform: translateY(0);} }
-         .header {
-  position: relative;
-  z-index: 10;
-}</style>
+</style>
 </head>
 <body>
   <!-- HEADER -->
@@ -67,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <nav class="nav">
         <a href="../php/homepage.php">Home</a>
         <a href="../php/services.php">Services</a>
-        <a href="../html/aboutus.html">About us</a>
+        <a href="../php/aboutus.php">About us</a>
       </nav>
 
      

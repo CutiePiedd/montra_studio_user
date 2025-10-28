@@ -100,8 +100,8 @@ $base_price = $_GET['price'] ?? 0;
     <div class="header-right">
       <nav class="nav">
        <a href="../php/homepage.php">Home</a>
-      <a href="../html/services.html">Services</a>
-      <a href="../html/aboutus.html">About us</a>
+      <a href="../php/services.php">Services</a>
+      <a href="../php/aboutus.php">About us</a>
       </nav>
 
      <?php if (isset($_SESSION['user_id'])): ?>

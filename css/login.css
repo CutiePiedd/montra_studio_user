@@ -6,14 +6,26 @@
  
 }
 
-body {
-  color: #333;
-  line-height: 1.6;
-   background-color: #fff9f9;
+body { 
+  font-family: 'Inter', sans-serif;  
+  margin: 0;    
+  background:  #fff9f9;
+  padding-top: 90px; /* <-- ADD THIS to push content down */
+  /* --- ADD THESE LINES FOR THE STICKY FOOTER --- */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
+
 /* HEADER */
-.header {
+  .header {
+ position: fixed;   /* <-- The main change */
+  top: 0;
+  left: 0;           /* <-- Add this */
+  width: 100%;       /* <-- Add this to span the full width */        /* <-- Add this to stick it to the top */
+  z-index: 10;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,6 +63,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 90vh;
+  flex-grow: 1;
 }
 
 .login-card {
