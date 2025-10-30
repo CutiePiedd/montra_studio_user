@@ -73,7 +73,7 @@ $conn->close();
   /* This makes the body fill the viewport */
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   box-sizing: border-box;
   /* --- End of added lines --- */
     }
@@ -83,6 +83,7 @@ $conn->close();
    /* --- Optional: Make main a flex container for chat-container --- */
    display: flex;
        padding: 0 15px;
+       min-height: 0;
     }
 
     /* --- Chat Container --- (Styled like a dash-card) */
@@ -116,6 +117,7 @@ $conn->close();
       background: #f8f9fa; /* Match body background */
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     /* --- Message Bubbles --- */
@@ -375,7 +377,35 @@ $conn->close();
   <?php if (isset($_SESSION['user_id'])): ?>
     // Notifications Fetch Logic (if bell exists)
     if (bell && notifDropdown) {
-        const notifCountSpan = document.getElementById('notifCount');
+  const notifCountSpan = document.getElementById('notifCount');
+
+  async function loadNotifications() {
+    try {
+      const res = await fetch('../api/get_notifications.php');
+      const data = await res.json();
+
+      notifDropdown.innerHTML = ''; // Clear old notifications
+
+      if (data.length === 0) {
+        notifDropdown.innerHTML = '<p style="text-align:center; color:#888;">No notifications</p>';
+        notifCountSpan.style.display = 'none';
+      } else {
+        data.forEach(notif => {
+          const p = document.createElement('p');
+          p.textContent = notif.message;
+          notifDropdown.appendChild(p);
+        });
+
+        notifCountSpan.textContent = data.length;
+        notifCountSpan.style.display = 'inline-block';
+      }
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  }
+
+  loadNotifications();
+  setInterval(loadNotifications, 5000);
 
         function fetchNotifications() {
           fetch('../php/fetch_notifications.php') // Verify this path

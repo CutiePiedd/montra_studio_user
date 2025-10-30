@@ -79,9 +79,10 @@ $conn->close();
     </div>
     <hr>
     <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
-    <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
-    <a href="user_chat.php" class="dropdown-item">Messages</a>
-    <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
+                        <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
+                        <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
+                        <a href="user_album.php" class="dropdown-item">My Album</a>
+                        <a href="user_chat.php" class="dropdown-item">Contact Admin</a>
     <hr>
     <a href="logout.php" class="dropdown-item logout">Logout</a>
   </div>
@@ -142,10 +143,10 @@ $conn->close();
       <div>
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Bookings</a></li>
-          <li><a href="#">Gallery</a></li>
-          <li><a href="#">About Us</a></li>
+          <li><a href="homepage.php">Home</a></li>
+            <li><a href="pending_bookings.php">Bookings</a></li>
+            <li><a href="user_album.php">Gallery</a></li>
+            <li><a href="aboutus.php">About Us</a></li>
         </ul>
       </div>
       <div>

@@ -1,0 +1,107 @@
+/* This file styles simple content pages like FAQ, Privacy, etc. */
+
+main {
+    flex-grow: 1; /* Ensures main content fills space, pushing footer down */
+    padding: 40px 0; /* Add some top/bottom padding */
+    background-color: #fff9f9; /* Light grey background for the page area */
+}
+
+.page-container {
+    width: 90%;
+    max-width: 900px; /* Standard width for a text document */
+    margin: 0 auto; /* Center the container */
+    background: #ffffff; /* White background for the content box */
+    padding: 30px 40px; /* Internal padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.page-container h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #25384A; /* Using your dark blue */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.page-container h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.page-container p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.page-container ul, .page-container ol {
+    margin-left: 20px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+.page-container li {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* --- Specific for FAQ --- */
+.faq-item {
+    margin-bottom: 25px;
+}
+
+.faq-item strong { /* The question */
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* --- Specific for Contact Form --- */
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+.contact-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #444;
+}
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+.contact-form .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background-color: #25384A;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.contact-form .btn-submit:hover {
+    background-color: #051731;
+}

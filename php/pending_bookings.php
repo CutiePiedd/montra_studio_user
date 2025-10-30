@@ -92,59 +92,32 @@ $conn->close();
   <div id="notifDropdown" class="notif-dropdown">
 
     <p style="text-align:center; color:#888;">Loading notifications...</p>
-
   </div>
-
 </div>
-
 <?php endif; ?>
-
    <?php if ($user): ?>
-
 <div class="profile-icon dropdown">
-
   <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" class="dropdown-toggle" id="profileToggle">
-
   <div class="dropdown-menu" id="profileMenu">
-
     <div class="dropdown-user">
-
       <p><strong><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></strong></p>
-
       <p><?= htmlspecialchars($user['email']) ?></p>
-
       <p class="member-since">Member since <?= (new DateTime($user['created_at']))->format('F Y') ?></p>
-
     </div>
-
     <hr>
-
-    <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
-
-    <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
-
-    <a href="user_chat.php" class="dropdown-item">Contact Admin</a>
-
-    <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
-    <a href="user_album.php" class="dropdown-item">My Album</a>
-
-
+   <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
+                        <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
+                        <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
+                        <a href="user_album.php" class="dropdown-item">My Album</a>
+                        <a href="user_chat.php" class="dropdown-item">Contact Admin</a>
     <hr>
-
     <a href="logout.php" class="dropdown-item logout">Logout</a>
-
   </div>
-
 </div>
-
 <?php else: ?>
-
 <a href="../php/login.php" class="btn outline">Login</a>
-
 <?php endif; ?>
-
   </div>
-
 </header>
 
 

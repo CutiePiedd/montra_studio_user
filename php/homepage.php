@@ -87,8 +87,8 @@ if ($user_id) {
       Through light, detail, and vision, we transform ordinary moments into timeless works of art, <br>
       so your memories live on forever.”</p>
       <div class="hero-buttons">
-        <a href="services.html" class="btn">Book Now</a>
-        <a href="aboutus.html" class="btn outline">Learn More</a>
+        <a href="services.php" class="btn">Book Now</a>
+        <a href="aboutus.php" class="btn outline">Learn More</a>
       </div>
     </div>
     <div class="hero-img">
@@ -190,10 +190,10 @@ if ($user_id) {
         <div>
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Bookings</a></li>
-            <li><a href="#">Gallery</a></li>
-            <li><a href="#">About Us</a></li>
+             <li><a href="homepage.php">Home</a></li>
+            <li><a href="pending_bookings.php">Bookings</a></li>
+            <li><a href="user_album.php">Gallery</a></li>
+            <li><a href="aboutus.php">About Us</a></li>
           </ul>
         </div>
         <div>

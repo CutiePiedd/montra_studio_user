@@ -120,7 +120,7 @@ $base_price = $_GET['price'] ?? 0;
 
 
       <div class="profile-icon">
-        <a href="../php/profile.php">
+        <a href="../php/pending_bookings.php">
           <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile">
         </a>
       </div>
@@ -226,10 +226,10 @@ $base_price = $_GET['price'] ?? 0;
       <div>
         <h4>Support</h4>
         <ul>
-          <li><a href="#">FAQs</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
+           <li><a href="homepage.php">Home</a></li>
+            <li><a href="pending_bookings.php">Bookings</a></li>
+            <li><a href="user_album.php">Gallery</a></li>
+            <li><a href="aboutus.php">About Us</a></li>
         </ul>
       </div>
       <div>

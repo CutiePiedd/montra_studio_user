@@ -315,63 +315,146 @@ body {
   position: fixed;
   z-index: 10;
 }
+
+/* 1. The main icon container */
 .notification-icon {
-  position: relative;
-  z-index: 10000; /* make sure dropdown stays on top */
+  position: relative; /* Crucial for positioning the badge and dropdown */
+  margin: 0 15px;
+  margin-top: -10px; /* Gives it space from the profile icon */
+  display: flex;
+  align-items: center;
+
 }
 
-    /* Notification Bell Styling */
-    .notification-icon {
-  position: relative;
-  margin-right: 15px;
+/* 2. The bell icon itself */
+#notifBell {
+  width: 24px; 
+  height: 24px;
   cursor: pointer;
-  display: inline-block;
+  transition: transform 0.2s ease;
 }
 
-.notification-icon img {
-  width: 30px;
-  height: 30px;
-  vertical-align: middle;
+#notifBell:hover {
+  transform: scale(1.1);
 }
 
+/* 3. The red notification count badge */
 .notif-count {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  background: red;
+  top: -5px;      /* Position overlapping the top right */
+  right: -8px;    /* Position overlapping the top right */
+  
+  background-color: #e74c3c; /* A strong red */
   color: white;
   font-size: 11px;
   font-weight: bold;
-  border-radius: 50%;
-  padding: 3px 6px;
-  display: none;
+  line-height: 1;
+  border-radius: 50%; /* Makes it a circle */
+  
+  min-width: 18px;   /* Ensures it's circular even with 1 digit */
+  height: 18px;
+  
+  /* Use flex to center the number perfectly */
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  
+  padding: 2px;
+  box-sizing: border-box; /* Ensures padding doesn't break size */
+  border: 2px solid white; /* Makes it "pop" from the bell */
+  
+  /* This is controlled by your JS */
+  display: none; 
 }
 
+/* 4. The dropdown container */
 .notif-dropdown {
+  display: none; /* Hidden by default */
   position: absolute;
-  right: 0;
-  top: 40px;
-  width: 250px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  z-index: 9999; /* Make sure it’s above everything */
-  display: none;
+  top: 160%;     /* Position below the icon (100% + margin) */
+  right: -10px;  /* Align to the right side */
+  
+  width: 330px; /* A good fixed width */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #eee;
+  z-index: 1001; /* Above other content */
+
+  /* ✅ THIS IS THE SCROLLABLE PART */
+  max-height: 400px;
+  overflow-y: auto;
+  
+  /* Add a little fade-in animation */
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+/* 5. The active state (toggled by JS) */
 .notif-dropdown.active {
-  display: block !important;
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
+/* 6. Individual notification items (the <p> tags) */
 .notif-dropdown p {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  margin: 0;
+  padding: 12px 15px;
   font-size: 14px;
   color: #333;
-  margin: 0;
-  background: white;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: normal; /* Allow text to wrap */
 }
 
+/* 7. Hover effect for items */
 .notif-dropdown p:hover {
-  background: #f5f5f5;
+  background-color: #f9f9f9;
 }
+
+/* 8. Don't put a border on the last item */
+.notif-dropdown p:last-child {
+  border-bottom: none;
+  border-radius: 0 0 8px 8px; /* Match container rounding */
+}
+
+/* 9. Styling for the "No notifications" or "Loading" text */
+.notif-dropdown p[style*="text-align:center"] {
+  font-style: italic;
+  color: #888;
+  padding: 20px 15px;
+}
+.notif-dropdown p[style*="text-align:center"]:hover {
+  background-color: #fff; /* Don't highlight this one */
+}
+
+/* 10. Optional: Custom Scrollbar */
+.notif-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.notif-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0 8px 8px 0;
+}
+.notif-dropdown::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 6px;
+}
+.notif-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+  .btn.outline {
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      .btn.outline:hover {
+        background: #f5f5f5;
+        border-color: #ccc;
+      }

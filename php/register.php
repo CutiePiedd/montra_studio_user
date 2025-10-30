@@ -136,10 +136,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div>
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="../html/homepage.html">Home</a></li>
-            <li><a href="../php/booking.php">Bookings</a></li>
-            <li><a href="#">Gallery</a></li>
-            <li><a href="../html/aboutus.html">About Us</a></li>
+             <li><a href="homepage.php">Home</a></li>
+            <li><a href="pending_bookings.php">Bookings</a></li>
+            <li><a href="user_album.php">Gallery</a></li>
+            <li><a href="aboutus.php">About Us</a></li>
           </ul>
         </div>
         <div>

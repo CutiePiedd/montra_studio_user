@@ -69,66 +69,135 @@ if ($user_id) {
         z-index: 10000;
       }
 
-      /* Notification Bell Styling */
-      .notification-icon {
-        position: relative;
-        margin-right: 15px;
-        cursor: pointer;
-        display: inline-block;
-      }
+ .notification-icon {
+  position: relative; /* Crucial for positioning the badge and dropdown */
+  margin: 0 15px;
+  margin-top: -10px; /* Gives it space from the profile icon */
+  display: flex;
+  align-items: center;
 
-      .notification-icon img {
-        width: 30px;
-        height: 30px;
-        vertical-align: middle;
-        
-        /* === THIS IS THE FIX === */
-        /* This CSS filter inverts the black icon to white */
-        filter: invert(1);
-      }
+}
+ .notification-icon img{
+  filter: invert();
+ }
+/* 2. The bell icon itself */
+#notifBell {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-      .notif-count {
-        position: absolute;
-        top: -6px;
-        right: -6px;
-        background: red;
-        color: white;
-        font-size: 11px;
-        font-weight: bold;
-        border-radius: 50%;
-        padding: 3px 6px;
-        display: none;
-      }
+#notifBell:hover {
+  transform: scale(1.1);
+}
 
-      .notif-dropdown {
-        position: absolute;
-        right: 0;
-        top: 40px;
-        width: 250px;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        z-index: 9999; /* Make sure it’s above everything */
-        display: none;
-      }
+/* 3. The red notification count badge */
+.notif-count {
+  position: absolute;
+  top: -5px;      /* Position overlapping the top right */
+  right: -8px;    /* Position overlapping the top right */
+  
+  background-color: #e74c3c; /* A strong red */
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 50%; /* Makes it a circle */
+  
+  min-width: 18px;   /* Ensures it's circular even with 1 digit */
+  height: 18px;
+  
+  /* Use flex to center the number perfectly */
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  
+  padding: 2px;
+  box-sizing: border-box; /* Ensures padding doesn't break size */
+  border: 2px solid white; /* Makes it "pop" from the bell */
+  
+  /* This is controlled by your JS */
+  display: none; 
+}
 
-      .notif-dropdown.active {
-        display: block !important;
-      }
+/* 4. The dropdown container */
+.notif-dropdown {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 160%;     /* Position below the icon (100% + margin) */
+  right: -10px;  /* Align to the right side */
+  
+  width: 330px; /* A good fixed width */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #eee;
+  z-index: 1001; /* Above other content */
 
-      .notif-dropdown p {
-        padding: 10px;
-        border-bottom: 1px solid #eee;
-        font-size: 14px;
-        color: #333;
-        margin: 0;
-        background: white;
-      }
+  /* ✅ THIS IS THE SCROLLABLE PART */
+  max-height: 400px;
+  overflow-y: auto;
+  
+  /* Add a little fade-in animation */
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
 
-      .notif-dropdown p:hover {
-        background: #f5f5f5;
-      }
+/* 5. The active state (toggled by JS) */
+.notif-dropdown.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
 
+/* 6. Individual notification items (the <p> tags) */
+.notif-dropdown p {
+  margin: 0;
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: normal; /* Allow text to wrap */
+}
+
+/* 7. Hover effect for items */
+.notif-dropdown p:hover {
+  background-color: #f9f9f9;
+}
+
+/* 8. Don't put a border on the last item */
+.notif-dropdown p:last-child {
+  border-bottom: none;
+  border-radius: 0 0 8px 8px; /* Match container rounding */
+}
+
+/* 9. Styling for the "No notifications" or "Loading" text */
+.notif-dropdown p[style*="text-align:center"] {
+  font-style: italic;
+  color: #888;
+  padding: 20px 15px;
+}
+.notif-dropdown p[style*="text-align:center"]:hover {
+  background-color: #fff; /* Don't highlight this one */
+}
+
+/* 10. Optional: Custom Scrollbar */
+.notif-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.notif-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0 8px 8px 0;
+}
+.notif-dropdown::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 6px;
+}
+.notif-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
       /* Login button style (for consistency) */
       .btn.outline {
         padding: 8px 16px;
@@ -150,7 +219,7 @@ if ($user_id) {
   <section class="hero-section">
     <div class="overlay">
     <header class="header">
-      <div class="logo"> <a href="../php/homepage.php"><img src="../images/logo0.png" alt="Montra Studio Logo" style="height:70px; width:150px;"></a>
+      <div class="logo"> <a href="../php/homepage.php"><img src="../images/logo0.png" alt="Montra Studio Logo" style="height:70px; width:170px;"></a>
       </div>
 
       <div class="header-right">
@@ -237,19 +306,19 @@ if ($user_id) {
       <div>
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Bookings</a></li>
-          <li><a href="#">Gallery</a></li>
-          <li><a href="#">About Us</a></li>
+           <li><a href="homepage.php">Home</a></li>
+            <li><a href="pending_bookings.php">Bookings</a></li>
+            <li><a href="user_album.php">Gallery</a></li>
+            <li><a href="aboutus.php">About Us</a></li>
         </ul>
       </div>
       <div>
         <h4>Support</h4>
         <ul>
-          <li><a href="#">FAQs</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
+           <li><a href="../php/faqs.php">FAQs</a></li>
+                        <li><a href="../php/contact_us.php">Contact Us</a></li>
+                        <li><a href="../php/privacy_policy.php">Privacy Policy</a></li>
+                        <li><a href="../php/terms_of_service.php">Terms of Service</a></li>
         </ul>
       </div>
       <div>

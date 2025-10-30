@@ -24,12 +24,11 @@ if ($user_id) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Services | Montra Studio</title>
   <link rel="stylesheet" href="../css/services.css">
-   <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/footer.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- HEADER -->
  <header class="header">
   <div class="logo">
     <a href="../html/homepage.html"><img src="../images/LOGO.png" alt="Montra Studio Logo" style="height:100px; width:300px;"></a>
@@ -41,47 +40,41 @@ if ($user_id) {
       <a href="../php/services.php">Services</a>
       <a href="../php/aboutus.php">About us</a>
     </nav>
- <?php if (isset($_SESSION['user_id'])): ?>
-<!-- Notification Bell (Only for logged-in users) -->
-<div class="notification-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png" 
-       alt="Notifications" id="notifBell">
-  <span id="notifCount" class="notif-count"></span>
+  <?php if (isset($_SESSION['user_id'])): ?>
+  <div class="notification-icon">
+    <img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png" 
+         alt="Notifications" id="notifBell">
+    <span id="notifCount" class="notif-count"></span>
 
-  <!-- Added: Default message inside dropdown so it's visible -->
-  <div id="notifDropdown" class="notif-dropdown">
-    <p style="text-align:center; color:#888;">Loading notifications...</p>
-  </div>
-</div>
-<?php endif; ?>
-   <?php if ($user): ?>
-<div class="profile-icon dropdown">
-  <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" class="dropdown-toggle" id="profileToggle">
-  <div class="dropdown-menu" id="profileMenu">
-    <div class="dropdown-user">
-      <p><strong><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></strong></p>
-      <p><?= htmlspecialchars($user['email']) ?></p>
-      <p class="member-since">Member since <?= (new DateTime($user['created_at']))->format('F Y') ?></p>
+    <div id="notifDropdown" class="notif-dropdown">
+      <p style="text-align:center; color:#888;">Loading notifications...</p>
     </div>
-    <hr>
-   <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
-        <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
-        <a href="user_chat.php" class="dropdown-item">Contact Admin</a>
-        <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
-         <a href="user_chat.php" class="dropdown-item">Messages</a> 
-    <hr>
-    <a href="logout.php" class="dropdown-item logout">Logout</a>
   </div>
-</div>
-<?php else: ?>
-<a href="../php/login.php" class="btn outline">  <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" width="30" height="30"></a>
-<?php endif; ?>
+  <?php endif; ?>
+    <?php if ($user): ?>
+  <div class="profile-icon dropdown">
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profile" class="dropdown-toggle" id="profileToggle">
+    <div class="dropdown-menu" id="profileMenu">
+      <div class="dropdown-user">
+        <p><strong><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></strong></p>
+        <p><?= htmlspecialchars($user['email']) ?></p>
+        <p class="member-since">Member since <?= (new DateTime($user['created_at']))->format('F Y') ?></p>
+      </div>
+      <hr>
+      <a href="pending_bookings.php" class="dropdown-item">Pending Bookings</a>
+      <a href="approved_bookings.php" class="dropdown-item">Approved Bookings</a>
+      <a href="rejected_bookings.php" class="dropdown-item">Rejected Bookings</a>
+      <a href="user_album.php" class="dropdown-item">My Album</a>
+      <a href="user_chat.php" class="dropdown-item">Contact Admin</a><hr>
+      <a href="logout.php" class="dropdown-item logout">Logout</a>
+    </div>
+  </div>
+  <?php else: ?>
+  <a href="../php/login.php" class="btn outline">Login</a>
+  <?php endif; ?>
   </div>
 </header>
-
-  <!-- HERO SECTION -->
-
-<section class="hero">
+ <section class="hero">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="breadcrumb">Home / Services</p>
@@ -93,8 +86,7 @@ if ($user_id) {
 </section> <br><br> <br><br><br>
 
 
-  <!-- WHAT WE OFFER -->
-<section class="offer-section">
+  <section class="offer-section">
   <div class="offer-overlay"></div>
   <div class="offer-content">
     <h2>What We Offer</h2>
@@ -103,8 +95,7 @@ if ($user_id) {
 </section><br><br><br>
 
 
-  <!-- SERVICE CARDS -->
-<section class="services-grid">
+  <section class="services-grid">
   <a class="service-card" href="../php/maincharacter.php">
     <img src="..\images\Group 134.png" alt="Main Character">
     <div class="overlay"></div>
@@ -113,8 +104,7 @@ if ($user_id) {
       <p>
         The Main Character Package is all about you. Enjoy a personalized studio session designed to highlight your personality and style, with professional lighting, customizable backdrops, and creative guidance to capture your best angles.
       </p>
-      <span class="see-more">see more</span> <!-- changed to non-anchor -->
-    </div>
+      <span class="see-more">see more</span> </div>
   </a>
 
   <a class="service-card" href="../php/squad.php">
@@ -151,7 +141,6 @@ if ($user_id) {
 
 
 
-  <!-- FOOTER -->
   <footer class="footer">
   <h2>Get In Touch</h2>
   <p class="footer-tagline">Capturing moments. Creating stories. Celebrating you.</p>
@@ -163,10 +152,10 @@ if ($user_id) {
       <div>
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Bookings</a></li>
-          <li><a href="#">Gallery</a></li>
-          <li><a href="#">About Us</a></li>
+          <li><a href="homepage.php">Home</a></li>
+            <li><a href="pending_bookings.php">Bookings</a></li>
+            <li><a href="user_album.php">Gallery</a></li>
+            <li><a href="aboutus.php">About Us</a></li>
         </ul>
       </div>
       <div>
@@ -204,7 +193,6 @@ window.addEventListener('click', (event) => {
 });
 </script>
   <?php if (isset($_SESSION['user_id'])): ?>
-  <!-- Notifications Script -->
   <script>
 document.addEventListener("DOMContentLoaded", function () {
   const bell = document.getElementById('notifBell');
